@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Clicker</title>
+</head>
+<body>
+    <div id="menuContainer">
+        <div id="menuTitle">
+            <div id="menuGameTitle"></div>
+        </div>
+        <div id="menuControls">
+            <button id="playButton" class="gameUI gameButton gameText toggle" onclick="playGame()">Play</button>
+            <button id="quitButton" class="gameUI gameButton gameText toggle" onclick="quitGame()">Quit</button>
+            <button id="settingButton" class="gameUI gameButton" onclick="openSetting()"><div id="setting" class="gameIcon"></div></button>
+            <button id="statsButton" class="gameUI gameButton" onclick="openStats()"><div id="stats" class="gameIcon"></div></button>
+            <button id="creditsButton" class="gameUI gameButton" onclick="openAbout()"><div id="about" class="gameIcon"></div></button>
+        </div>
+        <div id="menuBackdrop" class="toggle"></div>
+        <div id="menuSetting" class="gameUI gameModal toggle">
+            <button id="menuSettingClose" class="gameClose" onclick="openSetting()"></button>
+            <h1 id="menuSettingTitle" class="gameModalTitle">Option</h1>
+            <div id="menuSettingContent" class="gameModalContent">
+                <div class="gameUI item">
+                    <p class="gameText">Music</p>
+                    <p id="musicValue" class="gameText rangeValue">0%</p>
+                    <input type="range" min="0" max="100" value="0" oninput="updateMusicVolume(this.value)" id="musicRange" class="slider">
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Sound</p>
+                    <p id="soundValue" class="gameText rangeValue">75%</p>
+                    <input type="range" min="0" max="100" value="75" oninput="updateSoundVolume(this.value)" id="soundRange" class="slider" >
+                </div>
+            </div>
+        </div>
+        <div id="menuStats" class="gameUI gameModal toggle">
+            <button id="menuStatsClose" class="gameClose" onclick="openStats()"></button>
+            <h1 id="menuStatsTitle" class="gameModalTitle">Stats</h1>
+            <div id="menuStatsContent" class="gameModalContent">
+                <div class="gameUI item">
+                    <p class="gameText">Total Click</p>
+                    <p id="totalClickValue" class="gameText rangeValue">0</p>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Click Value</p>
+                    <p id="currentClickValue" class="gameText rangeValue">0</p>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Current Level</p>
+                    <p id="currentLevelValue" class="gameText rangeValue">0</p>
+                </div>
+            </div>
+        </div>
+        <div id="menuAbout" class="gameUI gameModal toggle">
+            <button id="menuAboutClose" class="gameClose" onclick="openAbout()"></button>
+            <h1 id="menuAboutTitle" class="gameModalTitle">About</h1>
+            <div id="menuAboutContent" class="gameModalContent">
+                <div class="gameUI item">
+                    <p class="gameText">Game Developer</p>
+                    <p class="gameSubText" style="margin-top: 5px;">Frankie B. Pinat</p>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Illustrations</p>
+                    <p class="gameSubText" style="margin-top: 5px;">www.flaticon.com</p>
+                    <p class="gameText" style="margin-top: 20px;">Music and Sound</p>
+                    <p class="gameSubText" style="margin-top: 5px;">www.pixabay.com</p>
+                    <p class="gameSubText" style="margin-top: 5px;">www.zapslat.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gameContainer">
+        <div id="spinnerContainer">
+            <div id="spinner"></div>
+        </div>
+        <div id="statsContainer">
+            <div id="levelContainer" class="gameUI">
+                <p id="levelDisplay" class="gameText">Level 1</p>
+                <div id="progressContainer"><div id="progressBar"></div></div>
+            </div>
+            <button id="homeButton" class="gameUI gameButton" onclick="playGame()"><div id="home" class="gameIcon"></div></button>
+            <div id="scoreBoard" class="gameUI">
+                <p class="gameText">Score</p>
+                <h1 id="scoreDisplay" class="gameTitle"></h1>
+            </div>
+        </div>
+        <div id="model" onclick="tap(event)"></div>
+        <div id="upgradeContainer">
+            <button id="storeButton" class="gameUI gameButton" onclick="openStore()"><div id="store" class="gameIcon"></div></button>
+            <button id="boostButton" class="gameUI gameButton" onclick="boostClick()">
+                <div id="boost" class="gameIcon"><div id="cooldownBar"></div></div>
+            </button>
+            <button id="upgradeButton" class="gameUI gameButton gameText" onclick="upgradeClick()">Upgrade Click 1</button>
+        </div>
+        <div id="storeBackdrop" class="toggle"></div>
+        <div id="storeContainer" class="toggle">
+            <button id="storeClose" class="gameClose" onclick="openStore()"></button>
+            <h1 id="storeTitle" class="gameTitle">Store</h1>
+            <div id="storeItem">
+                <div class="gameUI item">
+                    <p class="gameText">Click Miner</p>
+                    <p class="gameSubText">Mine 3,000 scores per minute</p>
+                    <button class="storeButton gameText" onclick="clickMiner()">150k</button>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Auto Clicker</p>
+                    <p class="gameSubText">Get 100 scores per seconds</p>
+                    <button class="storeButton gameText" onclick="autoClicker()">300k</button>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Increase Click</p>
+                    <p class="gameSubText">Additional 88 scores per click</p>
+                    <button class="storeButton gameText" onclick="increaseClick()">600k</button>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Click Multiplyer</p>
+                    <p class="gameSubText">Double the current click value</p>
+                    <button class="storeButton gameText" onclick="clickMultiplyer()">1.20M</button>
+                </div>
+                <div class="gameUI item">
+                    <p class="gameText">Clicker Mayhem</p>
+                    <p class="gameSubText">Unleash Powerfull Click Storm</p>
+                    <button class="storeButton gameText" onclick="clickerMayhem()">2.40M</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
